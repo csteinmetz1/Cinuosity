@@ -26,6 +26,7 @@ var koreanDictionary = require("./data/korean.json");
 var spanishDictionary = require("./data/spanish.json");
 var swahiliDictionary = require("./data/swahili.json");
 var swedishDictionary = require("./data/swedish.json");
+var commonDictionary = require("./data/common.json");
 
 var client_id = keys.client_id;
 var client_secret = keys.client_secret;
@@ -170,7 +171,7 @@ app.get('/callback', function(req, res) {
 
         var getRandomWord = function() {
           return new Promise(function(resolve, reject) {
-            var randomWord = swedishDictionary[Math.floor(Math.random()*swedishDictionary["size"])];
+            var randomWord = commonDictionary[Math.floor(Math.random()*commonDictionary["size"])];
             if (randomWord != undefined) {
               resolve(randomWord);
             } else {

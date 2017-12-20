@@ -22,7 +22,30 @@
         #primary{
             max-width: 280px;
             margin: 0 auto;
-        }</style>
+        }
+
+        .column {
+            color: #fff;
+            font-size: 1.5vw;
+            float: left;
+        }
+
+        .leftC, .rightC {
+            width: 10%;
+            text-align: center;
+        }
+
+        .middleC {
+            width: 80%;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+         content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
   </head>
     <div id="page">
         <div id="header" class="fade-in one site-header">
@@ -43,7 +66,12 @@
                 <div id="primary">
                     <div id="content" role="main">
                         <div class="button" onclick="login()">Discover</div>
-                        <div id="range"></div>
+                        <div class="slider">
+                            <div class="column leftC">-</div>
+                            <div id="range" class="column middleC"></div>
+                            <div class="column rightC">+</div>
+                        </div>
+                        
                         <p class="small">weirdness</p>
                     </div><!-- #content -->
                 </div><!-- #primary -->
