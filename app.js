@@ -242,8 +242,6 @@ app.get('/callback', function(req, res) {
           console.log(err);
         })
 
-        res.redirect('/generatingPlaylist');
-
         //spotifyApi.addTracksToPlaylist('1298764427', "6pR3WzV6x4I4UMNtfcJnoV" ,["spotify:track:7uYYzBBhFVJvW9WgOiknvZ"])
 
 
