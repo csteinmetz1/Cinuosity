@@ -1,0 +1,14 @@
+(function() {
+  $("#range").slider({
+    range: "min",
+    max: 100,
+    value: 50,
+    slide: function(e, ui) {
+      $("#currentVal").html(ui.value);
+    }
+  });
+
+}).call(this);
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiPGFub255bW91cz4iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFBQSxDQUFBLENBQUUsUUFBRixDQUFXLENBQUMsTUFBWixDQUNFO0lBQUEsS0FBQSxFQUFPLEtBQVA7SUFDQSxHQUFBLEVBQUssR0FETDtJQUVBLEtBQUEsRUFBTyxFQUZQO0lBR0EsS0FBQSxFQUFPLFFBQUEsQ0FBQyxDQUFELEVBQUksRUFBSixDQUFBO01BQ0wsQ0FBQSxDQUFFLGFBQUYsQ0FBZ0IsQ0FBQyxJQUFqQixDQUFzQixFQUFFLENBQUMsS0FBekI7SUFESztFQUhQLENBREY7QUFBQSIsInNvdXJjZXNDb250ZW50IjpbIiQoXCIjcmFuZ2VcIikuc2xpZGVyXG4gIHJhbmdlOiBcIm1pblwiXG4gIG1heDogMTAwXG4gIHZhbHVlOiA1MFxuICBzbGlkZTogKGUsIHVpKSAtPlxuICAgICQoXCIjY3VycmVudFZhbFwiKS5odG1sIHVpLnZhbHVlXG4gICAgcmV0dXJuIl19
+//# sourceURL=coffeescript

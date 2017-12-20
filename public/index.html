@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Cinuosity</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function login() {
+            location.href = '/login'
+        }
+    </script>
+    <style>
+        .wrap{
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1em;
+        }
+         
+        #primary{
+            max-width: 280px;
+            margin: 0 auto;
+        }</style>
+  </head>
+    <div id="page">
+        <div id="header" class="fade-in one site-header">
+            <div class="wrap">
+                    <p class="small right fade-in four site-credits"><a href="/about">about</a></p>
+                <div id="branding" role="banner">
+                    <h1 class="site-title">Cinuosity</h1>
+                    <img src="images/sine.svg">
+                    <p class="medium site-description">Discovering new music is hard. Cinuosity can help.</p>
+                </div><!--#branding-->
+
+            </div><!--.wrap-->
+        </div><!--#header-->
+
+        <div id="main">
+            <div class="fade-in two wrap">
+
+                <div id="primary">
+                    <div id="content" role="main">
+                        <div class="button" onclick="login()">Discover</div>
+                        <div id="range"></div>
+                        <p class="small">weirdness</p>
+                    </div><!-- #content -->
+                </div><!-- #primary -->
+
+            </div><!--.wrap-->
+        </div><!--#main-->
+
+        <div id="footer" class="site-footer">
+            <div class="wrap">
+
+            </div><!--.wrap-->
+        </div><!--#footer-->
+
+    </div><!--#page-->
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+    <script  src="js/slider.js"></script>
+  </body>
+</html
