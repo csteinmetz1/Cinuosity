@@ -1,3 +1,4 @@
 keys.js
 junk/
 node_modules/
+*.pem
