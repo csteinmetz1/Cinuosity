@@ -1,0 +1,15 @@
+{
+  "author": "Christian Steinmetz",
+  "name": "cinuosity",
+  "description": "Novel playlist generation and music discovery in Spotify",
+  "version": "0.0.1",
+  "dependencies": {
+    "cookie-parser": "1.3.2",
+    "express": "~4.0.0",
+    "mongodb": "^3.0.0-rc0",
+    "querystring": "~0.2.0",
+    "request": "~2.34.0",
+    "serve-favicon": "^2.4.5",
+    "spotify-web-api-node": "^2.5.0"
+  }
+}

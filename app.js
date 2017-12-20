@@ -27,10 +27,14 @@ var spanishDictionary = require("./data/spanish.json");
 var swahiliDictionary = require("./data/swahili.json");
 var swedishDictionary = require("./data/swedish.json");
 
+var client_id = keys.client_id;
+var client_secret = keys.client_secret;
+var redirect_uri = keys.redirect_uri;
+
 var spotifyApi = new SpotifyWebApi({
-  clientId : keys.client_id,
-  clientSecret : keys.client_secret,
-  redirectUri : keys.redirect_uri
+  clientId : client_id,
+  clientSecret : client_secret,
+  redirectUri : redirect_uri
 });
 
 /**
@@ -259,6 +263,10 @@ app.get('/callback', function(req, res) {
       }
     });
   }
+});
+
+app.get('/about', function(req, res) {
+  res.sendfile("./public/about.html");
 });
 
 app.get('/refresh_token', function(req, res) {

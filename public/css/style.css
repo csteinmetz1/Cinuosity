@@ -237,8 +237,8 @@ a:visited {
   /* Applies to all visited links */
   text-decoration:  none;
   font-weight:      bold;
-  color:            rgb(186, 186, 186);
-  } 
+  color:            #fff;
+  }  
 a:hover   {
   /* Applies to links under the pointer */
   text-decoration:  underline;
