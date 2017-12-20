@@ -169,11 +169,11 @@ app.get('/callback', function(req, res) {
          }
          */
 
-        var getRandomWord = function() {
+        var getRandomWord = function(special="") {
           return new Promise(function(resolve, reject) {
-            var randomWord = commonDictionary[Math.floor(Math.random()*commonDictionary["size"])];
+            var randomWord = largeDictionary[Math.floor(Math.random()*largeDictionary["size"])];
             if (randomWord != undefined) {
-              resolve(randomWord);
+              resolve(special + " " +randomWord);
             } else {
               reject("no random word")
             }
@@ -195,12 +195,12 @@ app.get('/callback', function(req, res) {
         * @param  {string} playlistName Name of the playlist
         * @param  {number} size Number of songs in the playlist
         */
-        var buildPlaylist = function(playlistName, size) {
+        var buildPlaylist = function(playlistName, size, special="") {
           var trackURIs =[];
           var userId;
           var playlistId;
           function buildPlaylistNow() {
-            getRandomWord()
+            getRandomWord(special)
             .then(function(randomWord){
                 return searchSpotify(randomWord);
             }, function(err){
@@ -220,7 +220,7 @@ app.get('/callback', function(req, res) {
                   })
                   .then(function(playlistId){
                     return addToPlaylist(userId, playlistId, trackURIs);
-                    res.redirect('/playlistReady')
+                    //res.redirect('/playlistReady')
                   }, function(err){
                     console.log(err)
                   });
@@ -238,11 +238,13 @@ app.get('/callback', function(req, res) {
           };
         };
 
-        getRandomWord()
+        special = "Christmas"
+
+        getRandomWord(special)
         .then(function(randomWord){
           // multistep process to build our random playlist
           var playlistName = "(Cinuosity) " + randomWord;
-          buildPlaylist(playlistName, 20);
+          buildPlaylist(playlistName, 20, special);
         }, function(err){
           console.log(err);
         })
