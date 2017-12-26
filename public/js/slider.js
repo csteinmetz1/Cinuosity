@@ -5,6 +5,10 @@ noUiSlider.create(rangeSlider, {
 	range: {
 		'min': [  0 ],
 		'max': [ 100 ]
+  },
+  pips: {
+		mode: 'range',
+		density: 10
 	}
 });
 

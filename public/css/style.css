@@ -258,3 +258,16 @@ a:active  {
   text-decoration:  underline;
   color: white;
   } 
+
+.noUi-pips {
+  color: #ffffff;
+  font-size: 1em;
+}
+
+.noUi-marker {
+  background: #ffffff;
+}
+
+.noUi-value {
+  margin-top: 10px;
+}
