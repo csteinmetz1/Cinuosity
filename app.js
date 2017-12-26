@@ -38,6 +38,8 @@ var spotifyApi = new SpotifyWebApi({
   redirectUri : redirect_uri
 });
 
+var playlistWeirdness = 50.0; // default playlist weirdness
+
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -63,10 +65,13 @@ app.use(express.static(__dirname + '/public'))
 // Set favicon
 app.use(favicon(__dirname + '/public/images/sine.ico'));
 
-app.get('/login', function(req, res) {
+app.get('/login/:weirdness', function(req, res) {
 
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
+
+  playlistWeirdness = req.params.weirdness;
+  console.log(playlistWeirdness);
 
   // your application requests authorization
   var scope = 'user-read-private playlist-modify-public user-read-email';
@@ -269,7 +274,7 @@ app.get('/callback', function(req, res) {
           var userId;
           var playlistId;
           function buildPlaylistNow() {
-            getRandomWord(weirdness, special)
+            getRandomWord(playlistWeirdness, special)
             .then(function(randomWord){
                 return searchSpotify(randomWord);
             }, function(err){
@@ -312,13 +317,12 @@ app.get('/callback', function(req, res) {
         })};
 
         var special = ""
-        var weirdness = 30
 
-        getRandomWord(weirdness, special)
+        getRandomWord(playlistWeirdness, special)
         .then(function(randomWord){
           // multistep process to build our random playlist
           var playlistName = "(Cinuosity) " + randomWord;
-          return buildPlaylist(playlistName, 10, weirdness, special);
+          return buildPlaylist(playlistName, 10, playlistWeirdness, special);
         }, function(err){
           console.log(err);
         })
@@ -378,7 +382,6 @@ app.get('/refresh_token', function(req, res) {
     }
   });
 });
-
 
 
 console.log('Listening on 9000');

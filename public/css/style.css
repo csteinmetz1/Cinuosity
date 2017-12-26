@@ -15,13 +15,24 @@ body {
   */
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width : 320px) and (max-width : 800px) {
   /* For mobile phones: */
-  [class*="col-"] {
-      width: 100%;
+  h1 {
+    font-size: 5em;
+    font-weight: 100;
+    margin-top: 40px;
+    margin-bottom: 5px;
   }
 }
-
+@media only screen and (min-width : 800px) {
+  /* For mobile phones: */
+  h1 {
+    font-size: 10em;
+    font-weight: 100;
+    margin-top: 40px;
+    margin-bottom: 5px;
+  }
+}
 /*
 @-webkit-keyframes AnimationName {
   0%{background-position:0% 50%}
@@ -85,10 +96,6 @@ body {
 h1 {
   text-align: center;
   color: #FFFFFF;
-  font-size: 10em;
-  font-weight: 100;
-  margin-top: 40px;
-  margin-bottom: 5px;
 }
 
 p.medium {
@@ -109,8 +116,19 @@ p.small {
 }
 
 p.right {
-  font-size: 1em;
+  font-size: 1.5em;
+  color: #FFFFFF;
   text-align: right;
+}
+
+p.weirdness {
+  font-size: 1.5em;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+p.weirdness-value {
+  color: #5bcaff
 }
 
 img {
@@ -197,43 +215,24 @@ transition: .3s;
 #range {
   margin: 0 auto;
   color: #ffffff;
-  margin-top: 12px;
+  margin-top: 20px;
   margin-bottom: 20px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 100;
-  height: 2px;
+  height: 10px;
   border: 0;
   background: #FFFFFF;
   outline: none;
 }
-#range .ui-slider-handle {
+#range .noUi-handle {
   position: absolute;
-  margin: -4px 0 0 -3px;
   border-radius: 100%;
-  background: none;
+  background: #fff;
   border: 2px solid #f7f7f7;
-  height: 18px;
-  width: 18px;
+  height: 25px;
+  width: 25px;
   outline: none;
   cursor: pointer;
 }
-#range .ui-slider-handle:hover {
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -o-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.1);
-  background: #fff;
-  
-}
 
-#range .ui-slider-handle:focus {
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -o-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.1);
-}
 #range .ui-slider-range {
   background: #FFFFFF;
 }

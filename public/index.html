@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cinuosity</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href="css/nouislider.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
-    <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
         function login() {
-            location.href = '/login'
+            var weirdness = document.getElementById('slider-range-value').innerHTML;
+            location.href = '/login' + "/" + weirdness
         }
     </script>
     <style>
@@ -53,9 +54,9 @@
                         <div class="button" onclick="login()">Discover</div>
                         <div class="slider">
                             <div id="range"></div>
+                            <p class="weirdness" id="slider-range-saying"></div>
+                            <p class="weirdness-value" id="slider-range-value"></div>
                         </div>
-                        
-                        <p class="small">weirdness</p>
                     </div><!-- #content -->
                 </div><!-- #primary -->
 
@@ -70,7 +71,7 @@
 
     </div><!--#page-->
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
-    <script  src="js/slider.js"></script>
+    <script src="js/nouislider.min.js"></script>
+    <script src='js/slider.js'></script>
   </body>
 </html
