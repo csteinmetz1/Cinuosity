@@ -162,16 +162,84 @@ app.get('/callback', function(req, res) {
           });
         };
 
-        /*
-        var getRandomWord = function() {
-          var words = ["sondorblue", "daddys beemer", "et anderson", "the high divers", "slide", "adksfjkasjdf", "motorsport", "post"];
-          return words[Math.floor(Math.random()*7)];
-         }
-         */
-
-        var getRandomWord = function(special="") {
-          return new Promise(function(resolve, reject) {
+        var getWordFromDictionary = function(dict){
+          if (dict == 'common') {
+            var randomWord = commonDictionary[Math.floor(Math.random()*commonDictionary["size"])];
+          } else if (dict == 'small') {
+            var randomWord = smallDictionary[Math.floor(Math.random()*smallDictionary["size"])];
+          } else if (dict == 'medium') {
+            var randomWord = mediumDictionary[Math.floor(Math.random()*mediumDictionary["size"])];
+          } else if (dict == 'large') {
             var randomWord = largeDictionary[Math.floor(Math.random()*largeDictionary["size"])];
+          } else if (dict == 'chinese') {
+            var randomWord = chineseDictionary[Math.floor(Math.random()*chineseDictionary["size"])];
+          } else if (dict == 'french') {
+            var randomWord = frenchDictionary[Math.floor(Math.random()*frenchDictionary["size"])];
+          } else if (dict == 'greek') {
+            var randomWord = greekDictionary[Math.floor(Math.random()*greekDictionary["size"])];
+          } else if (dict == 'korean') {
+            var randomWord = koreanDictionary[Math.floor(Math.random()*koreanDictionary["size"])];
+          } else if (dict == 'spanish') {
+            var randomWord = spanishDictionary[Math.floor(Math.random()*spanishDictionary["size"])];
+          } else if (dict == 'swahili') {
+            var randomWord = swahiliDictionary[Math.floor(Math.random()*swahiliDictionary["size"])];
+          } else if (dict == 'swedish') {
+            var randomWord = swedishDictionary[Math.floor(Math.random()*swedishDictionary["size"])];
+          }
+          return randomWord;
+        }
+
+        var getRandomWord = function(weirdness, special) {
+          return new Promise(function(resolve, reject) {
+            if (weirdness > 89){
+              var dictionaries = ['large', 'large', 'chinese', 'chinese', 'french', 'greek', 'korean', 'spanish', 'swahili', 'swahili', 'swedish'];
+              var dict = Math.floor(Math.random() * dictionaries.length);
+              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
+            } else if (weirdness > 79) {
+              var dictionaries = ['large', 'medium', 'chinese', 'french', 'greek', 'korean', 'spanish', 'swedish'];
+              var dict = Math.floor(Math.random() * dictionaries.length);
+              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
+            } else if (weirdness > 69) {
+              var dictionaries = ['large', 'medium', 'small', 'chinese', 'french', 'greek', 'korean', 'spanish'];
+              var dict = Math.floor(Math.random() * dictionaries.length);
+              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
+            } else if (weirdness > 59) {
+              var dictionaries = ['medium', 'medium', 'small', 'small', 'chinese', 'french', 'greek', 'korean', 'spanish', 'common'];
+              var dict = Math.floor(Math.random() * dictionaries.length);
+              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
+            } else if (weirdness > 49) {
+              var dictionaries = ['medium', 'small', 'chinese', 'french', 'korean', 'spanish', 'common', 'common'];
+              var dict = Math.floor(Math.random() * dictionaries.length);
+              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
+            } else if (weirdness > 39) {
+              var dictionaries = ['medium', 'small', 'small', 'small', 'small', 'french', 'spanish', 'common'];
+              var dict = Math.floor(Math.random() * dictionaries.length);
+              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
+            } else if (weirdness > 29) {
+              var dictionaries = ['small', 'small', 'small', 'small', 'french', 'common'];
+              var dict = Math.floor(Math.random() * dictionaries.length);
+              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
+            } else if (weirdness > 19) {
+              var dictionaries = ['small', 'small', 'small', 'small', 'common'];
+              var dict = Math.floor(Math.random() * dictionaries.length);
+              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
+            } else if (weirdness > 9 ) {
+              var dictionaries = ['common', 'common', 'common', 'small'];
+              var dict = Math.floor(Math.random() * dictionaries.length);
+              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
+            } else {
+              var randomWord = commonDictionary[Math.floor(Math.random()*commonDictionary["size"])];
+              console.log("Weirdness:", weirdness, "Dictionary:", 'common')
+            }
             if (randomWord != undefined) {
               resolve(special + " " +randomWord);
             } else {
@@ -195,12 +263,13 @@ app.get('/callback', function(req, res) {
         * @param  {string} playlistName Name of the playlist
         * @param  {number} size Number of songs in the playlist
         */
-        var buildPlaylist = function(playlistName, size, special="") {
+        var buildPlaylist = function(playlistName, size, weirdess, special="") {
+          return new Promise(function(resolve, reject) {
           var trackURIs =[];
           var userId;
           var playlistId;
           function buildPlaylistNow() {
-            getRandomWord(special)
+            getRandomWord(weirdness, special)
             .then(function(randomWord){
                 return searchSpotify(randomWord);
             }, function(err){
@@ -220,10 +289,14 @@ app.get('/callback', function(req, res) {
                   })
                   .then(function(playlistId){
                     return addToPlaylist(userId, playlistId, trackURIs);
-                    //res.redirect('/playlistReady')
                   }, function(err){
                     console.log(err)
-                  });
+                  })
+                  .then(function(data){
+                    resolve("Playlist complete.")
+                  }, function(err){
+                    reject(err)
+                  })
                 }
               } else {
                 buildPlaylistNow()
@@ -236,28 +309,34 @@ app.get('/callback', function(req, res) {
           for (i=0; i < size; i++) {
             buildPlaylistNow();
           };
-        };
+        })};
 
-        special = "Christmas"
+        var special = ""
+        var weirdness = 30
 
-        getRandomWord(special)
+        getRandomWord(weirdness, special)
         .then(function(randomWord){
           // multistep process to build our random playlist
           var playlistName = "(Cinuosity) " + randomWord;
-          buildPlaylist(playlistName, 20, special);
+          return buildPlaylist(playlistName, 10, weirdness, special);
         }, function(err){
           console.log(err);
         })
+        .then(function(randomWord){
+          res.redirect('/done');
+        },
+        function(err){
+          console.log(err);
+        });
 
         //spotifyApi.addTracksToPlaylist('1298764427', "6pR3WzV6x4I4UMNtfcJnoV" ,["spotify:track:7uYYzBBhFVJvW9WgOiknvZ"])
 
-
         // we can also pass the token to the browser to make requests from there
-        res.redirect('/#' +
-          querystring.stringify({
-            access_token: access_token,
-            refresh_token: refresh_token
-        }));
+        //res.redirect('/#' +
+        //  querystring.stringify({
+        //    access_token: access_token,
+        //    refresh_token: refresh_token
+        //}));
       } else {
         res.redirect('/#' +
           querystring.stringify({
@@ -270,6 +349,10 @@ app.get('/callback', function(req, res) {
 
 app.get('/about', function(req, res) {
   res.sendfile("./public/about.html");
+});
+
+app.get('/done', function(req, res) {
+  res.sendfile("./public/done.html");
 });
 
 app.get('/refresh_token', function(req, res) {
