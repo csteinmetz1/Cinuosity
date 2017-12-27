@@ -32,6 +32,17 @@ body {
     margin-top: 40px;
     margin-bottom: 5px;
   }
+  
+  .button:hover {
+    cursor: pointer;
+    color: #5bcaff;
+  }
+  
+  .button:hover:after {
+    left: -10%;
+    width: 120%;
+  }
+
 }
 /*
 @-webkit-keyframes AnimationName {
@@ -201,16 +212,6 @@ transition: .3s;
           transform: skewX(15deg);
   z-index: -1;
   }
-
-.button:hover {
-  cursor: pointer;
-  color: #5bcaff;
-}
-
-.button:hover:after {
-  left: -10%;
-  width: 120%;
-}
 
 #range {
   margin: 0 auto;
