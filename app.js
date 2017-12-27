@@ -27,6 +27,7 @@ var spanishDictionary = require("./data/spanish.json");
 var swahiliDictionary = require("./data/swahili.json");
 var swedishDictionary = require("./data/swedish.json");
 var commonDictionary = require("./data/common.json");
+var scDictionary = require("./data/sc.json");
 
 var client_id = keys.client_id;
 var client_secret = keys.client_secret;
@@ -241,6 +242,9 @@ app.get('/callback', function(req, res) {
               var dict = Math.floor(Math.random() * dictionaries.length);
               var randomWord = getWordFromDictionary(dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
+            } else if (weirdness = 'sc') {
+              var randomWord = scDictionary[Math.floor(Math.random()*scDictionary["size"])]['URI'];
+              console.log("Weirdness:", weirdness, "Artist URI:", randomWord)
             } else {
               var randomWord = commonDictionary[Math.floor(Math.random()*commonDictionary["size"])];
               console.log("Weirdness:", weirdness, "Dictionary:", 'common')

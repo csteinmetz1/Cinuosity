@@ -143,6 +143,17 @@ img {
   user-select: none; /* Standard */  
 }
 
+img.icon {
+  display: block;
+  margin: 0 auto;
+  align-content: right;
+  max-width: 50px;
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */  
+}
+
 .container {
   -webkit-user-select: none; /* Safari */        
   -moz-user-select: none; /* Firefox */
