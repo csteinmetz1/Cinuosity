@@ -58,7 +58,9 @@ var generateRandomString = function(length) {
 
 var stateKey = 'spotify_auth_state';
 
+
 var app = express();
+app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/public'))
    .use(cookieParser());
@@ -269,11 +271,13 @@ app.get('/callback', function(req, res) {
         * @param  {string} playlistName Name of the playlist
         * @param  {number} size Number of songs in the playlist
         */
+
+        var trackURIs =[];
+        var userId;
+        var playlistId;
+
         var buildPlaylist = function(playlistName, size, weirdess, special="") {
           return new Promise(function(resolve, reject) {
-          var trackURIs =[];
-          var userId;
-          var playlistId;
           function buildPlaylistNow() {
             getRandomWord(playlistWeirdness, special)
             .then(function(randomWord){
@@ -293,7 +297,8 @@ app.get('/callback', function(req, res) {
                   }, function(err){
                     console.log(err)
                   })
-                  .then(function(playlistId){
+                  .then(function(playlistId_){
+                    playlistId = playlistId_
                     return addToPlaylist(userId, playlistId, trackURIs);
                   }, function(err){
                     console.log(err)
@@ -328,7 +333,7 @@ app.get('/callback', function(req, res) {
           console.log(err);
         })
         .then(function(randomWord){
-          res.redirect('/done');
+          res.redirect('/done' + "/" + userId + "/" + playlistId);
         },
         function(err){
           console.log(err);
@@ -374,8 +379,10 @@ app.get('/about', function(req, res) {
   res.sendfile("./public/about.html");
 });
 
-app.get('/done', function(req, res) {
-  res.sendfile("./public/done.html");
+app.get('/done/:userId/:playlistId', function(req, res) {
+  var userId = req.params.userId;
+  var playlistId = req.params.playlistId;
+  res.render("done.ejs", {playlist : playlistId, user: userId});
 });
 
 app.get('/refresh_token', function(req, res) {

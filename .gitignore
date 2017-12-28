@@ -1,5 +1,6 @@
 keys.js
 junk/
 video/
+data/stats.json
 node_modules/
 *.pem
