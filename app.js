@@ -13,6 +13,7 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var SpotifyWebApi = require('spotify-web-api-node');
 var favicon = require('serve-favicon');
+var fs = require('fs');
 var keys = require('./keys');
 
 // Database Setup
@@ -332,6 +333,24 @@ app.get('/callback', function(req, res) {
         function(err){
           console.log(err);
         });
+
+        dateStamp = new Date()
+
+        fs.readFile('./data/stats.json', 'utf8', function readFileCallback(err, data){
+          if (err){
+              console.log(err);
+          } else {
+          obj = JSON.parse(data); //now it an object
+          obj.statistics.push({date: dateStamp, weirdess: playlistWeirdness}); // add some data
+          json = JSON.stringify(obj); // convert it back to json
+          fs.writeFile('./data/stats.json', json, 'utf8',  function(err) {
+            if (err) throw err;
+            console.log('complete');
+            }
+          );        
+        }});
+
+
 
         //spotifyApi.addTracksToPlaylist('1298764427', "6pR3WzV6x4I4UMNtfcJnoV" ,["spotify:track:7uYYzBBhFVJvW9WgOiknvZ"])
 
