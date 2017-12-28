@@ -30,6 +30,10 @@
         .definition {
             font-size: 0.75em;
         }
+
+        .playlist {
+            margin-bottom: 20px;
+        }
         </style>
   </head>
     <div id="page">
@@ -50,9 +54,8 @@
                     <div id="content" role="main">
                      <p class="medium">A new playlist is waiting for you.</p>
                      <br>
-                     <iframe src=<%= "https://open.spotify.com/embed/user/" + user + "/playlist/" + playlist %> width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
-                     <br>
-                     <p class="small"> <a href="/"><b>back</b></a></p>
+                     <iframe class="playlist" src=<%= "https://open.spotify.com/embed/user/" + user + "/playlist/" + playlist %> width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+                     <p class="smallish"> <a href="/"><b>back</b></a></p>
                     </div><!-- #content -->
                 </div><!-- #primary -->
 

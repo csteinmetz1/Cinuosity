@@ -23,6 +23,11 @@ body {
     margin-top: 0px;
     margin-bottom: 5px;
   }
+
+  .button:hover {
+    cursor: pointer;
+  }
+
 }
 @media only screen and (min-width : 800px) {
   /* For mobile phones: */
@@ -115,6 +120,14 @@ p.medium {
   font-size: 2em;
   margin: 0 auto;
 
+}
+
+p.smallish {
+  position: relative;
+  text-align: center;
+  color: #FFFFFF;
+  margin: 0 auto;
+  font-size: 1.5em;
 }
 
 p.small {
@@ -229,10 +242,19 @@ transition: .3s;
   border-radius: 100%;
   background: #fff;
   border: 2px solid #f7f7f7;
+  margin-left: 4px;
   height: 25px;
   width: 25px;
   outline: none;
   cursor: pointer;
+}
+
+#range .noUi-handle:before {
+  background: #ffffff;
+}
+
+#range .noUi-handle:after {
+  background: #ffffff;
 }
 
 #range .ui-slider-range {
@@ -274,3 +296,4 @@ a:active  {
   margin-top: 10px;
   color: #5bcaff;
 }
+
