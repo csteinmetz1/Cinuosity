@@ -198,7 +198,7 @@ app.get('/callback', function(req, res) {
         var getRandomWord = function(weirdness, special) {
           return new Promise(function(resolve, reject) {
             if (weirdness > 89){
-              var dictionaries = ['large', 'large', 'chinese', 'chinese', 'french', 'greek', 'korean', 'spanish', 'swahili', 'swahili', 'swedish'];
+              var dictionaries = ['large', 'large', 'chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish','swedish'];
               var dict = Math.floor(Math.random() * dictionaries.length);
               var randomWord = getWordFromDictionary(dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
