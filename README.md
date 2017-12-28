@@ -3,6 +3,8 @@ Novel playlist generation and music discovery in Spotify.
 
 View the live site at [cinuosity.com](http://cinuosity.com).
 
+![demo](demo.gif)
+
 # Overview
 Spotify Discover playlists are great at giving you more music similiar to the music you already listen to, but sometimes the greatest music disoveries come from unexpected or seamingly random connections. Cinuosity helps you to discover *new* genres, styles, and artists that you haven't heard before by injecting a bit of randomness into the process. Using a large number of multilingual dictionaries, Cinuosity generates pseudorandom playlists for you to explore. 
 
