@@ -4,7 +4,7 @@ from pprint import pprint
 
 def calculate(filename):
 
-    data = json.load(open('stats.json'))
+    data = json.load(open(filename))
 
     total_weirdness = 0
 
