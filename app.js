@@ -16,19 +16,33 @@ var favicon = require('serve-favicon');
 var fs = require('fs');
 var keys = require('./keys');
 
-// Database Setup
+// European
+var frenchDictionary = require("./data/french.json");
+var greekDictionary = require("./data/greek.json");
+var spanishDictionary = require("./data/spanish.json");
+var swedishDictionary = require("./data/swedish.json");
+var germanDictionary = require("./data/deutsch.json");
+//var italianDicitonary = require("./data/italiano.json");
+//var netherlandsDictionary = require("./data/nederlands.json");
+//var norweigenDictionary = require("./data/norsk.json");
+//var portugueseDictionary = require("./data/portuguese.json");
+//var swissDictionary = require("./data/swiss.json");
+
+// African
+var swahiliDictionary = require("./data/swahili.json");
+
+// Asian
+var chineseDictionary = require("./data/chinese.json");
+var koreanDictionary = require("./data/korean.json");
+var japaneseDictionary = require("./data/japanese.json");
+
+// English Dictionaries 
+var commonDictionary = require("./data/common.json");
 var smallDictionary = require("./data/small.json")
 var mediumDictionary = require("./data/medium.json");
 var largeDictionary = require("./data/large.json");
-var chineseDictionary = require("./data/chinese.json");
-var frenchDictionary = require("./data/french.json");
-var greekDictionary = require("./data/greek.json");
-var koreanDictionary = require("./data/korean.json");
-var spanishDictionary = require("./data/spanish.json");
-var swahiliDictionary = require("./data/swahili.json");
-var swedishDictionary = require("./data/swedish.json");
-var commonDictionary = require("./data/common.json");
 
+// Set API keys - make sure you have created the keys.js file
 var client_id = keys.client_id;
 var client_secret = keys.client_secret;
 var redirect_uri = keys.redirect_uri;
@@ -154,12 +168,14 @@ app.get('/callback', function(req, res) {
 
         var searchSpotify = function(query) {
           console.log("Searching", query)          
-          return spotifyApi.searchTracks(query)
+          return spotifyApi.searchTracks(query, { limit : 10, offset : Math.floor(Math.random()*10) })
           .then(function(data) {
-            if (data.body.tracks.items.length !== 0) {
-              var trackURI = data.body.tracks.items[0].uri;
-              var trackName = data.body.tracks.items[0].name;
-              var trackArtist = data.body.tracks.items[0].artists[0].name;
+            numResults = data.body.tracks.items.length;
+            if (numResults !== 0) {
+              var idx = Math.floor(Math.random()*numResults);
+              var trackURI = data.body.tracks.items[idx].uri;
+              var trackName = data.body.tracks.items[idx].name;
+              var trackArtist = data.body.tracks.items[idx].artists[0].name;
               console.log('Added', trackName, 'by', trackArtist, "with URI", trackURI);
               return trackURI;
             } else {
@@ -200,27 +216,27 @@ app.get('/callback', function(req, res) {
         var getRandomWord = function(weirdness, special) {
           return new Promise(function(resolve, reject) {
             if (weirdness > 89){
-              var dictionaries = ['large', 'large', 'chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish','swedish'];
+              var dictionaries = ['large', 'large', 'chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'portuguese', 'norwegian', 'netherlands', 'japanese', 'german', 'italian', 'swiss'];
               var dict = Math.floor(Math.random() * dictionaries.length);
               var randomWord = getWordFromDictionary(dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
             } else if (weirdness > 79) {
-              var dictionaries = ['large', 'medium', 'chinese', 'french', 'greek', 'korean', 'spanish', 'swedish'];
+              var dictionaries = ['large', 'medium', 'chinese', 'french', 'greek', 'korean', 'spanish', 'swedish', 'portuguese', 'norwegian', 'netherlands', 'japanese', 'german', 'italian', 'swiss'];
               var dict = Math.floor(Math.random() * dictionaries.length);
               var randomWord = getWordFromDictionary(dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
             } else if (weirdness > 69) {
-              var dictionaries = ['large', 'medium', 'small', 'chinese', 'french', 'greek', 'korean', 'spanish'];
+              var dictionaries = ['large', 'medium', 'small', 'chinese', 'french', 'greek', 'korean', 'spanish', 'portuguese', 'japanese', 'german', 'italian'];
               var dict = Math.floor(Math.random() * dictionaries.length);
               var randomWord = getWordFromDictionary(dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
             } else if (weirdness > 59) {
-              var dictionaries = ['medium', 'medium', 'small', 'small', 'chinese', 'french', 'greek', 'korean', 'spanish', 'common'];
+              var dictionaries = ['medium', 'medium', 'small', 'small', 'chinese', 'french', 'greek', 'korean', 'spanish', 'common', 'japanese', 'swiss'];
               var dict = Math.floor(Math.random() * dictionaries.length);
               var randomWord = getWordFromDictionary(dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
             } else if (weirdness > 49) {
-              var dictionaries = ['medium', 'small', 'chinese', 'french', 'korean', 'spanish', 'common', 'common'];
+              var dictionaries = ['medium', 'medium', 'medium', 'small', 'chinese', 'french', 'korean', 'spanish', 'japanese', 'swiss'];
               var dict = Math.floor(Math.random() * dictionaries.length);
               var randomWord = getWordFromDictionary(dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])

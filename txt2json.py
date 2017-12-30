@@ -2,11 +2,10 @@ import sys
 import os
 import json
 
-
 def convert_txt_to_json(filename):
     output = {} # dictionary to be converted to json
 
-    with open(os.path.join(os.getcwd(),filename)) as txtfile:
+    with open(os.path.join(os.getcwd(),filename), encoding = "ISO-8859-1") as txtfile:
         
         dictionary = txtfile.read().split()
         
