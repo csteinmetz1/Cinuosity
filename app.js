@@ -16,31 +16,34 @@ var favicon = require('serve-favicon');
 var fs = require('fs');
 var keys = require('./keys');
 
-// European
-var frenchDictionary = require("./data/french.json");
-var greekDictionary = require("./data/greek.json");
-var spanishDictionary = require("./data/spanish.json");
-var swedishDictionary = require("./data/swedish.json");
-var germanDictionary = require("./data/deutsch.json");
+// Foregin Dictionaries
+//var frenchDictionary = require("./data/french.json");
+//var greekDictionary = require("./data/greek.json");
+//var spanishDictionary = require("./data/spanish.json");
+//var swedishDictionary = require("./data/swedish.json");
+//var germanDictionary = require("./data/deutsch.json");
+//var swahiliDictionary = require("./data/swahili.json");
+//var chineseDictionary = require("./data/chinese.json");
+//var koreanDictionary = require("./data/korean.json");
+//var japaneseDictionary = require("./data/japanese.json");
 //var italianDicitonary = require("./data/italiano.json");
 //var netherlandsDictionary = require("./data/nederlands.json");
 //var norweigenDictionary = require("./data/norsk.json");
 //var portugueseDictionary = require("./data/portuguese.json");
 //var swissDictionary = require("./data/swiss.json");
 
-// African
-var swahiliDictionary = require("./data/swahili.json");
-
-// Asian
-var chineseDictionary = require("./data/chinese.json");
-var koreanDictionary = require("./data/korean.json");
-var japaneseDictionary = require("./data/japanese.json");
-
 // English Dictionaries 
 var commonDictionary = require("./data/common.json");
-var smallDictionary = require("./data/small.json")
+var smallDictionary = require("./data/small.json");
 var mediumDictionary = require("./data/medium.json");
 var largeDictionary = require("./data/large.json");
+//var maleDictionary  = require("./data/male.json");
+//var femaleDictionary = require("./data/female.json");
+var familyDictionary = require("./data/family.json");
+var shortUrbanDictionary = require("./data/short_urban_full.json")
+var mediumUrbanDictionary = require("./data/medium_urban_full.json")
+var longUrbanDictionary = require("./data/long_urban_full.json")
+
 
 // Set API keys - make sure you have created the keys.js file
 var client_id = keys.client_id;
@@ -166,8 +169,16 @@ app.get('/callback', function(req, res) {
           });
         }
 
-        var searchSpotify = function(query) {
-          console.log("Searching", query)          
+        var searchSpotify = function(query, playlistWeirdness, popFilterOn) {
+          console.log("Searching", query)
+          if (playlistWeirdness > 0.0 && popFilterOn) {
+            var popularity = ((1.0 - Math.log10(playlistWeirdness/10.0))*100.0) + 25;
+          } else if (playlistWeirdness < 20 && popFilterOn) {
+            var popularity = 100;
+          } else {
+            var popularity = 100;
+          }   
+          console.log(popularity);
           return spotifyApi.searchTracks(query, { limit : 10, offset : Math.floor(Math.random()*10) })
           .then(function(data) {
             numResults = data.body.tracks.items.length;
@@ -176,8 +187,11 @@ app.get('/callback', function(req, res) {
               var trackURI = data.body.tracks.items[idx].uri;
               var trackName = data.body.tracks.items[idx].name;
               var trackArtist = data.body.tracks.items[idx].artists[0].name;
-              console.log('Added', trackName, 'by', trackArtist, "with URI", trackURI);
-              return trackURI;
+              var trackPop = data.body.tracks.items[idx].popularity;
+              if (trackPop <= popularity) {
+                console.log('Added', trackName, 'by', trackArtist, "with URI", trackURI, "and popularity:", trackPop);
+                return trackURI;
+              }
             } else {
               console.log('No results for', query);
             }
@@ -186,85 +200,151 @@ app.get('/callback', function(req, res) {
           });
         };
 
-        var getWordFromDictionary = function(dict){
-          if (dict == 'common') {
-            var randomWord = commonDictionary[Math.floor(Math.random()*commonDictionary["size"])];
-          } else if (dict == 'small') {
-            var randomWord = smallDictionary[Math.floor(Math.random()*smallDictionary["size"])];
-          } else if (dict == 'medium') {
-            var randomWord = mediumDictionary[Math.floor(Math.random()*mediumDictionary["size"])];
-          } else if (dict == 'large') {
-            var randomWord = largeDictionary[Math.floor(Math.random()*largeDictionary["size"])];
-          } else if (dict == 'chinese') {
-            var randomWord = chineseDictionary[Math.floor(Math.random()*chineseDictionary["size"])];
-          } else if (dict == 'french') {
-            var randomWord = frenchDictionary[Math.floor(Math.random()*frenchDictionary["size"])];
-          } else if (dict == 'greek') {
-            var randomWord = greekDictionary[Math.floor(Math.random()*greekDictionary["size"])];
-          } else if (dict == 'korean') {
-            var randomWord = koreanDictionary[Math.floor(Math.random()*koreanDictionary["size"])];
-          } else if (dict == 'spanish') {
-            var randomWord = spanishDictionary[Math.floor(Math.random()*spanishDictionary["size"])];
-          } else if (dict == 'swahili') {
-            var randomWord = swahiliDictionary[Math.floor(Math.random()*swahiliDictionary["size"])];
-          } else if (dict == 'swedish') {
-            var randomWord = swedishDictionary[Math.floor(Math.random()*swedishDictionary["size"])];
-          } else if (dict == 'german') {
-            var randomWord = germanDictionary[Math.floor(Math.random()*germanDictionary["size"])];
-          } else
+        var getWordFromDictionary = function(mode, dict){
+          if (mode == 'english') {
+            if (dict == 'common') {
+              var randomWord = commonDictionary[Math.floor(Math.random()*commonDictionary["size"])];
+            } else if (dict == 'small') {
+              var randomWord = smallDictionary[Math.floor(Math.random()*smallDictionary["size"])];
+            } else if (dict == 'medium') {
+              var randomWord = mediumDictionary[Math.floor(Math.random()*mediumDictionary["size"])];
+            } else if (dict == 'large') {
+              var randomWord = largeDictionary[Math.floor(Math.random()*largeDictionary["size"])];        
+            } else if (dict == 'family') {
+              var randomWord = familyDictionary[Math.floor(Math.random()*familyDictionary["size"])]; 
+            } else if (dict == 'shortUrban') {
+              var randomWord = shortUrbanDictionary[Math.floor(Math.random()*shortUrbanDictionary["size"])];             
+            } else if (dict == 'mediumUrban') {
+              var randomWord = mediumUrbanDictionary[Math.floor(Math.random()*mediumUrbanDictionary["size"])];
+            } else if (dict == 'longUrban') {
+              var randomWord = longUrbanDictionary[Math.floor(Math.random()*longUrbanDictionary["size"])];
+            } else if (dict == 'family') {
+              var randomWord = familyDictionary[Math.floor(Math.random()*familyDictionary["size"])];
+            }
+          } else if (mode == 'international') {             
+            if (dict == 'chinese') {
+              var randomWord = chineseDictionary[Math.floor(Math.random()*chineseDictionary["size"])];
+            } else if (dict == 'french') {
+              var randomWord = frenchDictionary[Math.floor(Math.random()*frenchDictionary["size"])];
+            } else if (dict == 'greek') {
+              var randomWord = greekDictionary[Math.floor(Math.random()*greekDictionary["size"])];
+            } else if (dict == 'korean') {
+              var randomWord = koreanDictionary[Math.floor(Math.random()*koreanDictionary["size"])];
+            } else if (dict == 'spanish') {
+              var randomWord = spanishDictionary[Math.floor(Math.random()*spanishDictionary["size"])];
+            } else if (dict == 'swahili') {
+              var randomWord = swahiliDictionary[Math.floor(Math.random()*swahiliDictionary["size"])];
+            } else if (dict == 'swedish') {
+              var randomWord = swedishDictionary[Math.floor(Math.random()*swedishDictionary["size"])];
+            } else if (dict == 'german') {
+              var randomWord = germanDictionary[Math.floor(Math.random()*germanDictionary["size"])];
+            }
+          }
           console.log("got a random word", randomWord)
-          return randomWord;
+          return randomWord;  
         }
 
-        var getRandomWord = function(weirdness, special) {
+        var getRandomWord = function(weirdness, mode, special) {
           return new Promise(function(resolve, reject) {
             if (weirdness > 89){
-              var dictionaries = ['large', 'large', 'chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
-              var dict = Math.floor(Math.random() * dictionaries.length);
-              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              if (mode == 'english'){
+                var dictionaries = ['longUrban', 'large'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              } else {
+                var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              }
+              var randomWord = getWordFromDictionary(mode, dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
             } else if (weirdness > 79) {
-              var dictionaries = ['large', 'medium', 'chinese', 'french', 'greek', 'korean', 'spanish', 'swedish', 'german'];
-              var dict = Math.floor(Math.random() * dictionaries.length);
-              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              if (mode == 'english'){
+                var dictionaries = ['medium', 'mediumUrban', 'large', 'large', 'large', 'largeUrban', 'family'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              } else {
+                var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              }
+              var randomWord = getWordFromDictionary(mode, dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
             } else if (weirdness > 69) {
-              var dictionaries = ['large', 'medium', 'small', 'chinese', 'french', 'greek', 'korean', 'spanish', 'german'];
-              var dict = Math.floor(Math.random() * dictionaries.length);
-              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              if (mode == 'english'){
+                var dictionaries = ['medium', 'medium', 'mediumUrban', 'large', 'large', 'family'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              } else {
+                var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              }
+              var randomWord = getWordFromDictionary(mode, dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
             } else if (weirdness > 59) {
-              var dictionaries = ['medium', 'medium', 'small', 'small', 'chinese', 'french', 'greek', 'korean', 'spanish', 'common', 'german'];
-              var dict = Math.floor(Math.random() * dictionaries.length);
-              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              if (mode == 'english'){
+                var dictionaries = ['medium', 'medium', 'medium', 'mediumUrban', 'mediumUrban', 'large', 'family'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              } else {
+                var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              }
+              var randomWord = getWordFromDictionary(mode, dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
             } else if (weirdness > 49) {
-              var dictionaries = ['medium', 'medium', 'medium', 'small', 'chinese', 'french', 'korean', 'spanish'];
-              var dict = Math.floor(Math.random() * dictionaries.length);
-              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              if (mode == 'english'){
+                var dictionaries = ['small', 'shortUrban', 'medium', 'medium', 'medium', 'mediumUrban', 'large'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              } else {
+                var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              }
+              var randomWord = getWordFromDictionary(mode, dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
             } else if (weirdness > 39) {
-              var dictionaries = ['medium', 'small', 'small', 'small', 'small', 'french', 'spanish', 'common'];
-              var dict = Math.floor(Math.random() * dictionaries.length);
-              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              if (mode == 'english'){
+                var dictionaries = ['small', 'small', 'shortUrban', 'shortUrban', 'medium', 'medium'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              } else {
+                var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              }
+              var randomWord = getWordFromDictionary(mode, dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
             } else if (weirdness > 29) {
-              var dictionaries = ['small', 'small', 'small', 'small', 'french', 'common'];
-              var dict = Math.floor(Math.random() * dictionaries.length);
-              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              if (mode == 'english'){
+                var dictionaries = ['common', 'small', 'small', 'shortUrban', 'medium'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              } else {
+                var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              }
+              var randomWord = getWordFromDictionary(mode, dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
             } else if (weirdness > 19) {
-              var dictionaries = ['small', 'small', 'small', 'small', 'common'];
-              var dict = Math.floor(Math.random() * dictionaries.length);
-              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              if (mode == 'english'){
+                var dictionaries = ['common', 'small', 'medium'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              } else {
+                var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              }
+              var randomWord = getWordFromDictionary(mode, dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
             } else if (weirdness > 9 ) {
-              var dictionaries = ['common', 'common', 'common', 'small'];
-              var dict = Math.floor(Math.random() * dictionaries.length);
-              var randomWord = getWordFromDictionary(dictionaries[dict]);
+              if (mode == 'english'){
+                var dictionaries = ['common', 'small'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              } else {
+                var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              }
+              var randomWord = getWordFromDictionary(mode, dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict])
             } else {
-              var randomWord = commonDictionary[Math.floor(Math.random()*commonDictionary["size"])];
+              if (mode == 'english'){
+                var dictionaries = ['common'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              } else {
+                var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
+                var dict = Math.floor(Math.random() * dictionaries.length);
+              }
+              var randomWord = getWordFromDictionary(mode, dictionaries[dict]);
               console.log("Weirdness:", weirdness, "Dictionary:", 'common')
             }
             if (randomWord != undefined) {
@@ -298,9 +378,9 @@ app.get('/callback', function(req, res) {
         var buildPlaylist = function(playlistName, size, weirdess, special="") {
           return new Promise(function(resolve, reject) {
           function buildPlaylistNow() {
-            getRandomWord(playlistWeirdness, special)
+            getRandomWord(playlistWeirdness, mode, special)
             .then(function(randomWord){
-                return searchSpotify(randomWord);
+                return searchSpotify(randomWord, playlistWeirdness, true);
             }, function(err){
               console.error(err);
             })
@@ -341,9 +421,11 @@ app.get('/callback', function(req, res) {
           };
         })};
 
-        var special = ""
+        var special = "";
+        var mode = 'english';
 
-        getRandomWord(playlistWeirdness, special)
+        // hardcoded playlist naming weirdness
+        getRandomWord(20, mode, special)
         .then(function(randomWord){
           // multistep process to build our random playlist
           var playlistName = "(Cinuosity) " + randomWord;
@@ -373,8 +455,6 @@ app.get('/callback', function(req, res) {
             }
           );        
         }});
-
-
 
         //spotifyApi.addTracksToPlaylist('1298764427', "6pR3WzV6x4I4UMNtfcJnoV" ,["spotify:track:7uYYzBBhFVJvW9WgOiknvZ"])
 
@@ -427,7 +507,6 @@ app.get('/refresh_token', function(req, res) {
     }
   });
 });
-
 
 console.log('Listening on 9000');
 app.listen(9000);
