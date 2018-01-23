@@ -255,7 +255,7 @@ app.get('/callback', function(req, res) {
           return new Promise(function(resolve, reject) {
             if (weirdness > 89){
               if (mode == 'english'){
-                var dictionaries = ['mediumUrban', 'longUrban']; //['shortUrban', 'mediumUrban', 'longUrban', 'large', 'large', 'large', 'large'];
+                var dictionaries = ['large', 'large', 'large', 'large'];
                 var dict = Math.floor(Math.random() * dictionaries.length);
               } else {
                 var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
@@ -273,7 +273,7 @@ app.get('/callback', function(req, res) {
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict]);
             } else if (weirdness > 79) {
               if (mode == 'english'){
-                var dictionaries = ['medium', 'mediumUrban', 'large', 'large', 'large', 'family'];
+                var dictionaries = ['medium', 'large', 'large', 'large', 'family'];
                 var dict = Math.floor(Math.random() * dictionaries.length);
               } else {
                 var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
@@ -291,7 +291,7 @@ app.get('/callback', function(req, res) {
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict]);
             } else if (weirdness > 69) {
               if (mode == 'english'){
-                var dictionaries = ['medium', 'medium', 'mediumUrban', 'large', 'large', 'family'];
+                var dictionaries = ['medium', 'medium', 'large', 'large', 'family'];
                 var dict = Math.floor(Math.random() * dictionaries.length);
               } else {
                 var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
@@ -309,7 +309,7 @@ app.get('/callback', function(req, res) {
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict]);
             } else if (weirdness > 59) {
               if (mode == 'english'){
-                var dictionaries = ['medium', 'medium', 'medium', 'mediumUrban', 'large', 'family'];
+                var dictionaries = ['medium', 'medium', 'medium', 'large', 'family'];
                 var dict = Math.floor(Math.random() * dictionaries.length);
               } else {
                 var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
@@ -345,7 +345,7 @@ app.get('/callback', function(req, res) {
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict]);
             } else if (weirdness > 39) {
               if (mode == 'english'){
-                var dictionaries = ['small', 'small', 'shortUrban', 'shortUrban', 'medium', 'medium'];
+                var dictionaries = ['small', 'small', 'medium', 'medium'];
                 var dict = Math.floor(Math.random() * dictionaries.length);
               } else {
                 var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
@@ -363,7 +363,7 @@ app.get('/callback', function(req, res) {
               console.log("Weirdness:", weirdness, "Dictionary:", dictionaries[dict]);
             } else if (weirdness > 29) {
               if (mode == 'english'){
-                var dictionaries = ['common', 'small', 'small', 'shortUrban', 'medium'];
+                var dictionaries = ['common', 'small', 'small', 'medium'];
                 var dict = Math.floor(Math.random() * dictionaries.length);
               } else {
                 var dictionaries = ['chinese', 'french', 'greek', 'greek', 'korean', 'spanish', 'swahili', 'swedish', 'german'];
