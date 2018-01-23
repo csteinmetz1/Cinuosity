@@ -504,7 +504,7 @@ app.get('/callback', function(req, res) {
         })};
 
         var special = "";
-        var mode = 'international';
+        var mode = 'english';
 
         // hardcoded playlist naming weirdness
         getRandomWord(20, mode, special)
