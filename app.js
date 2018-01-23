@@ -17,20 +17,20 @@ var fs = require('fs');
 var keys = require('./keys');
 
 // Foregin Dictionaries
-var frenchDictionary = require("./data/french.json");
-var greekDictionary = require("./data/greek.json");
-var spanishDictionary = require("./data/spanish.json");
-var swedishDictionary = require("./data/swedish.json");
-var germanDictionary = require("./data/deutsch.json");
-var swahiliDictionary = require("./data/swahili.json");
-var chineseDictionary = require("./data/chinese.json");
-var koreanDictionary = require("./data/korean.json");
-var japaneseDictionary = require("./data/japanese.json");
-var italianDicitonary = require("./data/italiano.json");
-var netherlandsDictionary = require("./data/nederlands.json");
-var norweigenDictionary = require("./data/norsk.json");
-var portugueseDictionary = require("./data/portuguese.json");
-var swissDictionary = require("./data/swiss.json");
+//var frenchDictionary = require("./data/french.json");
+//var greekDictionary = require("./data/greek.json");
+//var spanishDictionary = require("./data/spanish.json");
+//var swedishDictionary = require("./data/swedish.json");
+//var germanDictionary = require("./data/deutsch.json");
+//var swahiliDictionary = require("./data/swahili.json");
+//var chineseDictionary = require("./data/chinese.json");
+//var koreanDictionary = require("./data/korean.json");
+//var japaneseDictionary = require("./data/japanese.json");
+//var italianDicitonary = require("./data/italiano.json");
+//var netherlandsDictionary = require("./data/nederlands.json");
+//var norweigenDictionary = require("./data/norsk.json");
+//var portugueseDictionary = require("./data/portuguese.json");
+//var swissDictionary = require("./data/swiss.json");
 
 // English Dictionaries 
 var commonDictionary = require("./data/common.json");
@@ -39,10 +39,10 @@ var mediumDictionary = require("./data/medium.json");
 var largeDictionary = require("./data/large.json");
 //var maleDictionary  = require("./data/male.json");
 //var femaleDictionary = require("./data/female.json");
-var familyDictionary = require("./data/family.json");
-var shortUrbanDictionary = require("./data/short_urban_full.json")
-var mediumUrbanDictionary = require("./data/medium_urban_full.json")
-var longUrbanDictionary = require("./data/long_urban_full.json")
+//var familyDictionary = require("./data/family.json");
+//var shortUrbanDictionary = require("./data/short_urban_full.json")
+//var mediumUrbanDictionary = require("./data/medium_urban_full.json")
+//var longUrbanDictionary = require("./data/long_urban_full.json")
 
 
 // Set API keys - make sure you have created the keys.js file
