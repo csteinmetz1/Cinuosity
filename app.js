@@ -470,12 +470,28 @@ app.get('/callback', function(req, res) {
                   getMe()
                   .then(function(data){
                     userId = data;
-                    return createPlaylist(userId, playlistName);
+                    return spotifyApi.getUserPlaylists(userId, { limit: 50 })
+                  }, function(err){
+                    console.log(err)
+                  })
+                  .then(function(userPlaylists){
+                    userPlaylistNames = userPlaylists.body.items.filter(playlist => playlist.name == '(Cinuosity)')
+                    if (userPlaylistNames.length == 0)
+                    {
+                      return spotifyApi.createPlaylist(userId, '(Cinuosity)')
+                    }
+                    else 
+                    {
+                      return new Promise(function(resolve) {
+                        resolve(userPlaylistNames[0])
+                      })
+                    }
                   }, function(err){
                     console.log(err)
                   })
                   .then(function(playlistId_){
-                    playlistId = playlistId_
+                    playlistId = playlistId_.id
+                    console.log(playlistId)
                     return addToPlaylist(userId, playlistId, trackURIs);
                   }, function(err){
                     console.log(err)
