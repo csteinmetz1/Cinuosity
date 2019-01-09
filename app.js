@@ -40,10 +40,6 @@ var largeDictionary = require("./data/large.json");
 //var maleDictionary  = require("./data/male.json");
 //var femaleDictionary = require("./data/female.json");
 //var familyDictionary = require("./data/family.json");
-//var shortUrbanDictionary = require("./data/short_urban_full.json")
-//var mediumUrbanDictionary = require("./data/medium_urban_full.json")
-//var longUrbanDictionary = require("./data/long_urban_full.json")
-
 
 // Set API keys - make sure you have created the keys.js file
 var client_id = keys.client_id;
@@ -439,7 +435,7 @@ app.get('/callback', function(req, res) {
 
         var addToPlaylist = function(userId, playlistId, trackURIs) {
           console.log(userId, playlistId, trackURIs);
-          return spotifyApi.addTracksToPlaylist(userId, playlistId, trackURIs)
+          return spotifyApi.addTracksToPlaylist(playlistId, trackURIs)
           .then(function(data) {
             console.log('Added', trackURIs.length, 'tracks to playlist');
           }, function(err) {

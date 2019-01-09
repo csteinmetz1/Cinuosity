@@ -1,7 +1,9 @@
+.vscode/
 keys.js
 junk/
 video/
 data/stats.json
+data/storage
 node_modules/
 *.pem
 CinuosityCover.jpg
