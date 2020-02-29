@@ -19,7 +19,7 @@ Install node.js modules by running install within the new directory
 npm install 
 ```
 
-Create a keys.js file with your API app details and save it in the root directory. 
+Create a keys.js file with your API app details and save it in the root directory
 ```
 // Spotify API keys
 module.exports = {
@@ -29,9 +29,21 @@ module.exports = {
 };
 ```
 
+or you can simply export these values as environment variables.
+```
+export CLIENT_ID=your_client_id_here
+export CLIENT_SECRET=your_client_secret_here
+export REDIRECT_URI=your_callback_uri_here
+```
+
+Additionally you can change the port (default is 9000).
+```
+export PORT=80
+```
+
 Start the server
 ```
-node app.js
+npm start
 ```
 # References 
 * [Spotify Web API documentation](https://developer.spotify.com/web-api/)
