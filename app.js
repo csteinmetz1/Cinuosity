@@ -14,7 +14,37 @@ var cookieParser = require('cookie-parser');
 var SpotifyWebApi = require('spotify-web-api-node');
 var favicon = require('serve-favicon');
 var fs = require('fs');
-var keys = require('./keys');
+
+
+try {
+  if (fs.existsSync('./keys')) {
+    // load the data is the keys.js file exists
+    var keys = require('./keys');
+    // Set API keys - make sure you have created the keys.js file
+    var client_id = keys.client_id;
+    var client_secret = keys.client_secret;
+    var redirect_uri = keys.redirect_uri;
+  }
+  else {
+    var client_id = process.env.CLIENT_ID;
+    var client_secret = process.env.CLIENT_SECRET;
+    var redirect_uri = process.env.REDIRECT_URI;
+  }
+} catch(err) {
+  console.error(err)
+}
+
+// create stats file if it doesn't exist
+if (!fs.existsSync('./data/stats.json')) {
+  let emptyStats = {statistics : []};
+  json = JSON.stringify(emptyStats);
+  fs.writeFile('./data/stats.json', json, function writeFileCallback(err){
+    if (err){
+      console.log(err);
+    }
+  });
+}
+
 
 // Foregin Dictionaries
 //var frenchDictionary = require("./data/french.json");
@@ -40,11 +70,6 @@ var largeDictionary = require("./data/large.json");
 //var maleDictionary  = require("./data/male.json");
 //var femaleDictionary = require("./data/female.json");
 //var familyDictionary = require("./data/family.json");
-
-// Set API keys - make sure you have created the keys.js file
-var client_id = keys.client_id;
-var client_secret = keys.client_secret;
-var redirect_uri = keys.redirect_uri;
 
 var spotifyApi = new SpotifyWebApi({
   clientId : client_id,
@@ -602,5 +627,6 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-console.log('Listening on 9000');
-app.listen(9000);
+var PORT = process.env.PORT || 9000;
+console.log('Listening on ', PORT);
+app.listen(PORT);
